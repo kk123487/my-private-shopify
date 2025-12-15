@@ -1,0 +1,14 @@
+.container {
+  padding: 40px;
+  font-family: sans-serif;
+}
+
+.heading {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.info {
+  font-size: 1.2rem;
+  color: #555;
+}

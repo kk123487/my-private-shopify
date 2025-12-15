@@ -1,0 +1,13 @@
+__turbopack_load_page_chunks__("/_error", [
+  "static/chunks/41e31_next_dist_compiled_0355bb74._.js",
+  "static/chunks/41e31_next_dist_shared_lib_4c6e20e8._.js",
+  "static/chunks/41e31_next_dist_client_c72c752c._.js",
+  "static/chunks/41e31_next_dist_88cd7620._.js",
+  "static/chunks/41e31_next_error_3603d566.js",
+  "static/chunks/[next]_entry_page-loader_ts_dff6b56f._.js",
+  "static/chunks/41e31_react-dom_f90cb92b._.js",
+  "static/chunks/41e31_6c40b2d4._.js",
+  "static/chunks/[root-of-the-server]__89a19067._.js",
+  "static/chunks/my-private-shopify_pages__error_2da965e7._.js",
+  "static/chunks/turbopack-my-private-shopify_pages__error_47f51b42._.js"
+])

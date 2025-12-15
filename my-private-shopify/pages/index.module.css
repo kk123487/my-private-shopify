@@ -1,0 +1,13 @@
+.container {
+  padding: 40px;
+  font-family: sans-serif;
+}
+
+.quickAccess {
+  margin-top: 32px;
+}
+
+.quickList {
+  font-size: 18px;
+  line-height: 2;
+}
