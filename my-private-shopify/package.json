@@ -11,11 +11,12 @@
   "dependencies": {
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-quill": "^2.0.0"
   },
   "devDependencies": {
-    "typescript": "latest",
+    "@types/node": "latest",
     "@types/react": "latest",
-    "@types/node": "latest"
+    "typescript": "latest"
   }
 }

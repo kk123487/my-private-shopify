@@ -1,0 +1,42 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #eee;
+  padding: 2rem;
+}
+
+.form {
+  margin-bottom: 24px;
+}
+
+.input {
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.quillWrapper {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  width: 600px;
+  max-width: 100%;
+  background: #fff;
+}
+
+.pageItem {
+  margin-bottom: 12px;
+}
+
+.editButton {
+  margin-left: 16px;
+}
+
+.deleteButton {
+  margin-left: 8px;
+}

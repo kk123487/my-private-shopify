@@ -1,3 +1,33 @@
+.logoPreview {
+  max-width: 120px;
+  margin: 8px 0;
+}
+.brandColorValue {
+  margin-left: 8px;
+}
+.brandingSection {
+  margin-top: 24px;
+}
+.brandingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.brandColorInput {
+  margin-left: 8px;
+}
+.helpLink {
+  margin-left: 8px;
+  font-size: 0.9em;
+  color: #888;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.helpLink:hover {
+  color: #0070f3;
+  text-decoration: underline;
+}
 .container {
   padding: 40px;
   font-family: sans-serif;
@@ -11,4 +41,36 @@
 .info {
   font-size: 1.2rem;
   color: #555;
+}
+
+.onboardingChecklist {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.onboardingStep {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+.stepDone {
+  color: green;
+  margin-right: 8px;
+}
+.stepTodo {
+  color: gray;
+  margin-right: 8px;
+}
+.stepLink {
+  text-decoration: underline;
+  color: #0070f3;
+}
+.formMargin {
+  margin-bottom: 2rem;
+}
+.inputMargin {
+  margin-left: 1rem;
+  margin-right: 2rem;
 }

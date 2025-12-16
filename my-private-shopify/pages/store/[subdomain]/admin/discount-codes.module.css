@@ -1,0 +1,24 @@
+.discountCodesContainer {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #eee;
+}
+.discountForm {
+  margin-bottom: 32px;
+}
+.inputMargin {
+  margin-right: 8px;
+}
+.inputNumber {
+  width: 80px;
+  margin-right: 8px;
+}
+.errorMsg {
+  color: red;
+}
+.codesTable {
+  width: 100%;
+}

@@ -1,13 +1,31 @@
-import React from 'react';
-import { supabase } from '../lib/supabaseClient';
-import styles from './admin.module.css';
 
-export default function AdminDashboard() {
+
+import styles from './admin.module.css';
+import { withRoleAuth } from '../lib/withRoleAuth';
+
+function AdminDashboard() {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Admin Dashboard</h1>
-      <p className={styles.info}>Welcome to the admin dashboard. Here you can manage your store, products, and users.</p>
-      {/* Add your admin dashboard features here */}
+    <div className={styles.dashboardContainer}>
+      <aside className={styles.sidebar}>
+        <h2>Admin Dashboard</h2>
+        <nav>
+          <ul>
+            <li><a href="/admin/teams">Team Management</a></li>
+            <li><a href="/admin/stores">Store Management</a></li>
+            <li><a href="/admin/products">Product Management</a></li>
+            <li><a href="/admin/orders">Order Management</a></li>
+            <li><a href="/admin/customers">Customer Management</a></li>
+            <li><a href="/admin/users">User Management</a></li>
+            <li><a href="/admin/analytics">Platform Analytics</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main className={styles.mainContent}>
+        <h1>Welcome, Admin!</h1>
+        <p>Use the navigation to manage teams, stores, users, and view analytics.</p>
+      </main>
     </div>
   );
 }
+
+export default withRoleAuth(AdminDashboard, ['super_admin', 'store_admin']);

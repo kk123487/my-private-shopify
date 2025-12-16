@@ -34,6 +34,8 @@ type Store = {
   id: string;
   name: string;
   subdomain: string;
+  logo_url?: string;
+  brand_color?: string;
 };
 
 const ProductDetailPage: React.FC = () => {
@@ -60,10 +62,10 @@ const ProductDetailPage: React.FC = () => {
       const { data: { user: authUser } } = await supabase.auth.getUser();
       setUser(authUser);
 
-      // Load store
+      // Load store (with branding)
       const { data: storeData, error: storeError } = await supabase
         .from('stores')
-        .select('*')
+        .select('*, logo_url, brand_color')
         .eq('subdomain', subdomain as string)
         .single();
 
@@ -208,12 +210,15 @@ const ProductDetailPage: React.FC = () => {
       </Head>
 
       {/* Header */}
-      <header className="border-b border-gray-200 sticky top-0 bg-white z-50">
+      <header className="border-b border-gray-200 sticky top-0 bg-white z-50" style={{ borderColor: store.brand_color || undefined }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href={`/store/${subdomain}`} className="flex items-center">
-              <span className="text-2xl font-bold text-gray-900">{store.name}</span>
+            <Link href={`/store/${subdomain}`} className="flex items-center gap-2">
+              {store.logo_url && (
+                <img src={store.logo_url} alt="Store Logo" style={{ height: 40, width: 40, objectFit: 'contain', borderRadius: 8 }} />
+              )}
+              <span className="text-2xl font-bold" style={{ color: store.brand_color || undefined }}>{store.name}</span>
             </Link>
 
             {/* Navigation */}
@@ -310,7 +315,7 @@ const ProductDetailPage: React.FC = () => {
             {product.image_url ? (
               <Image 
                 src={product.image_url} 
-                alt={product.title}
+                alt={product.title ? `Product image for ${product.title}` : 'Product image'}
                 width={800}
                 height={800}
                 className="w-full h-full object-cover"
@@ -362,6 +367,7 @@ const ProductDetailPage: React.FC = () => {
                   onClick={() => handleQuantityChange(-1)}
                   disabled={quantity <= 1}
                   className="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg"
+                  aria-label="Decrease quantity"
                 >
                   −
                 </button>
@@ -370,6 +376,7 @@ const ProductDetailPage: React.FC = () => {
                   onClick={() => handleQuantityChange(1)}
                   disabled={product.inventory ? quantity >= product.inventory : false}
                   className="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg"
+                  aria-label="Increase quantity"
                 >
                   +
                 </button>
@@ -382,6 +389,7 @@ const ProductDetailPage: React.FC = () => {
                 onClick={handleAddToCart}
                 disabled={product.inventory === 0}
                 className="w-full px-8 py-4 text-lg"
+                aria-label={product.inventory === 0 ? 'Out of Stock' : 'Add to Cart'}
               >
                 {product.inventory === 0 ? 'Out of Stock' : 'Add to Cart'}
               </Button>
@@ -395,6 +403,7 @@ const ProductDetailPage: React.FC = () => {
               <Link
                 href={`/store/${subdomain}/checkout`}
                 className="block w-full px-8 py-4 bg-gray-900 text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition-colors text-center"
+                aria-label="Buy now and proceed to checkout"
               >
                 Buy Now
               </Link>
@@ -432,12 +441,138 @@ const ProductDetailPage: React.FC = () => {
                 </li>
               </ul>
             </div>
+
+            {/* Customer Reviews */}
+            <div className="border-t border-gray-200 pt-8 mt-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Customer Reviews</h2>
+              <ReviewsSection productId={product.id} />
+            </div>
+          // --- ReviewsSection component ---
+          import { useRef } from 'react';
+
+          function ReviewsSection({ productId }: { productId: string }) {
+            const [reviews, setReviews] = useState<any[]>([]);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState<string | null>(null);
+            const [name, setName] = useState('');
+            const [rating, setRating] = useState(5);
+            const [comment, setComment] = useState('');
+            const [submitting, setSubmitting] = useState(false);
+            const [success, setSuccess] = useState(false);
+            const formRef = useRef<HTMLFormElement>(null);
+
+            useEffect(() => {
+              setLoading(true);
+              fetch(`/api/product-reviews?productId=${productId}`)
+                .then(res => res.json())
+                .then(data => {
+                  setReviews(Array.isArray(data) ? data : []);
+                  setLoading(false);
+                })
+                .catch(() => {
+                  setError('Failed to load reviews');
+                  setLoading(false);
+                });
+            }, [productId, success]);
+
+            const handleSubmit = async (e: React.FormEvent) => {
+              e.preventDefault();
+              setSubmitting(true);
+              setError(null);
+              setSuccess(false);
+              const res = await fetch('/api/product-reviews', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId, name, rating, comment }),
+              });
+              if (res.ok) {
+                setSuccess(true);
+                setName('');
+                setRating(5);
+                setComment('');
+                formRef.current?.reset();
+              } else {
+                setError('Failed to submit review');
+              }
+              setSubmitting(false);
+            };
+
+            return (
+              <div>
+                {loading ? (
+                  <p>Loading reviews...</p>
+                ) : (
+                  <>
+                    {reviews.length === 0 ? (
+                      <p className="text-gray-500">No reviews yet. Be the first to review this product!</p>
+                    ) : (
+                      <ul className="space-y-4 mb-8">
+                        {reviews.map((review, idx) => (
+                          <li key={idx} className="border rounded-lg p-4 bg-gray-50">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-semibold text-gray-800">{review.name}</span>
+                              <span className="text-yellow-500">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
+                            </div>
+                            <div className="text-gray-700 mb-1">{review.comment}</div>
+                            <div className="text-xs text-gray-400">{new Date(review.created_at).toLocaleDateString()}</div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                )}
+                <form onSubmit={handleSubmit} ref={formRef} className="space-y-4 mt-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Name</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      required
+                      className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Rating</label>
+                    <select
+                      value={rating}
+                      onChange={e => setRating(Number(e.target.value))}
+                      className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                    >
+                      {[5,4,3,2,1].map(r => (
+                        <option key={r} value={r}>{r} Star{r > 1 ? 's' : ''}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Comment</label>
+                    <textarea
+                      value={comment}
+                      onChange={e => setComment(e.target.value)}
+                      rows={3}
+                      className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="bg-[#008060] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#006E52] disabled:opacity-50"
+                    aria-label="Submit product review"
+                  >
+                    {submitting ? 'Submitting...' : 'Submit Review'}
+                  </button>
+                  {error && <p className="text-red-600 text-sm mt-2" role="alert" aria-live="assertive">{error}</p>}
+                  {success && <p className="text-green-600 text-sm mt-2" role="status" aria-live="polite">✓ Review submitted!</p>}
+                </form>
+              </div>
+            );
+          }
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-20">
+      <footer className="py-12 mt-20" style={{ background: store.brand_color || '#222', color: '#fff' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-gray-400 text-sm">

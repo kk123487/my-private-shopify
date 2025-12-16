@@ -579,7 +579,7 @@ const CheckoutPage: React.FC = () => {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg" role="alert" aria-live="assertive">
                 {error}
               </div>
             )}
@@ -590,6 +590,7 @@ const CheckoutPage: React.FC = () => {
                 onClick={handlePlaceOrder}
                 disabled={processing}
                 className="w-full px-8 py-4 bg-[#008060] text-white text-lg font-semibold rounded-lg hover:bg-[#006E52] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Place order and proceed to payment"
               >
                 {processing ? 'Processing...' : `Place Order - R${total.toFixed(2)}`}
               </button>
@@ -616,7 +617,7 @@ const CheckoutPage: React.FC = () => {
                         {item.image_url ? (
                           <Image 
                             src={item.image_url} 
-                            alt={item.title}
+                            alt={item.title ? `Product image for ${item.title}` : 'Product image'}
                             width={64}
                             height={64}
                             className="w-full h-full object-cover"
@@ -660,6 +661,7 @@ const CheckoutPage: React.FC = () => {
                         onClick={applyDiscountCode}
                         disabled={applyingDiscount || !discountCode.trim()}
                         className="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm hover:bg-gray-800 disabled:bg-gray-300"
+                        aria-label="Apply discount code"
                       >
                         {applyingDiscount ? 'Applying...' : 'Apply'}
                       </button>
@@ -684,6 +686,7 @@ const CheckoutPage: React.FC = () => {
                       <button
                         onClick={removeDiscount}
                         className="text-green-700 hover:text-green-900 text-sm font-medium"
+                        aria-label="Remove discount code"
                       >
                         Remove
                       </button>

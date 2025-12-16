@@ -1,0 +1,100 @@
+.featuredHeading {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+}
+.main {
+  padding: 2rem;
+  text-align: center;
+}
+.logo {
+  max-height: 120px;
+  margin: 2rem auto;
+}
+.brandText {
+  font-size: 20px;
+}
+.defaultBrandColor {
+  color: #333;
+}
+.dynamicBrandColor {
+  /* Will be overridden by inline style or via attribute selector */
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin: 3rem auto 0 auto;
+  max-width: 1100px;
+}
+
+.productCard {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #eee;
+  padding: 1.5rem;
+  text-align: left;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.productCard:hover {
+  box-shadow: 0 4px 16px #ddd;
+}
+.productImage {
+  width: 100%;
+  max-width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: #fafafa;
+}
+.productTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+.productPrice {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.productLink {
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .main {
+    padding: 1rem;
+  }
+  .productGrid {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  .productCard {
+    padding: 1rem;
+  }
+  .logo {
+    max-height: 80px;
+    margin: 1rem auto;
+  }
+  .featuredHeading {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+[data-brandcolor]:not([data-brandcolor=""]) {
+  /* color: attr(data-brandcolor color); */
+}

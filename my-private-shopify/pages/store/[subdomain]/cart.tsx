@@ -224,7 +224,7 @@ const CartPage: React.FC = () => {
                       {item.image_url ? (
                         <Image 
                           src={item.image_url} 
-                          alt={item.title}
+                          alt={item.title ? `Product image for ${item.title}` : 'Product image'}
                           width={96}
                           height={96}
                           className="w-full h-full object-cover"
@@ -249,6 +249,7 @@ const CartPage: React.FC = () => {
                       onClick={() => updateQuantity(item.id, -1)}
                       disabled={item.quantity <= 1}
                       className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+                      aria-label="Decrease quantity"
                     >
                       −
                     </button>
@@ -256,6 +257,7 @@ const CartPage: React.FC = () => {
                     <button
                       onClick={() => updateQuantity(item.id, 1)}
                       className="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 font-bold"
+                      aria-label="Increase quantity"
                     >
                       +
                     </button>
@@ -273,6 +275,7 @@ const CartPage: React.FC = () => {
                     onClick={() => removeItem(item.id)}
                     className="text-red-600 hover:text-red-700 px-2"
                     title="Remove item"
+                    aria-label={`Remove ${item.title} from cart`}
                   >
                     ✕
                   </button>
@@ -284,6 +287,7 @@ const CartPage: React.FC = () => {
                 <button
                   onClick={clearCart}
                   className="text-sm text-red-600 hover:text-red-700 font-medium"
+                  aria-label="Clear cart"
                 >
                   Clear Cart
                 </button>
@@ -325,6 +329,7 @@ const CartPage: React.FC = () => {
                 <Link
                   href={`/store/${subdomain}/checkout`}
                   className="block w-full px-6 py-3 bg-[#008060] text-white text-center rounded-lg font-semibold hover:bg-[#006E52] transition-colors mb-3"
+                  aria-label="Proceed to checkout"
                 >
                   Proceed to Checkout
                 </Link>

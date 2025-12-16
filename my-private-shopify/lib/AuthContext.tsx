@@ -1,7 +1,8 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
-import getSupabaseClient from './supabaseClient';
+import { supabase } from './supabaseClient';
+// ...existing code...
 
 interface UserProfile {
 	id: string;
@@ -10,7 +11,7 @@ interface UserProfile {
 	role: 'super_admin' | 'store_admin' | 'user';
 }
 
-interface AuthContextType {
+export interface AuthContextType {
 	session: Session | null;
 	user: UserProfile | null;
 	loading: boolean;
@@ -19,14 +20,13 @@ interface AuthContextType {
 	signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [session, setSession] = useState<Session | null>(null);
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [loading, setLoading] = useState(true);
-	// Always use a fresh client instance per render
-	const supabase = getSupabaseClient();
+	// Use the shared supabase client instance
 
 	useEffect(() => {
 		// Check initial session
@@ -117,7 +117,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
 	const context = useContext(AuthContext);
 	if (context === undefined) {
-		throw new Error('useAuth must be used within AuthProvider');
+		throw new Error('useAuth must be used within an AuthProvider');
 	}
 	return context;
 }

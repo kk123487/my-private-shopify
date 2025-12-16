@@ -1,0 +1,44 @@
+.progressBarContainer {
+  margin: 16px 0 24px 0;
+  width: 100%;
+  background: #f3f3f3;
+  border-radius: 8px;
+  height: 18px;
+  overflow: hidden;
+}
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #008060, #00c2b7);
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+}
+.progressLabel {
+  font-size: 0.95em;
+  color: #333;
+  margin-bottom: 4px;
+}
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 1px dotted #888;
+}
+.tooltipText {
+  visibility: hidden;
+  width: 220px;
+  background: #222;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -110px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.95em;
+}
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}

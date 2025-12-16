@@ -1,0 +1,11 @@
+.infoIcon {
+  margin-left: 8px;
+  color: #888;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+
+.progressBar[data-progress] {
+  width: var(--progress-width, 0%);
+  transition: width 0.3s;
+}

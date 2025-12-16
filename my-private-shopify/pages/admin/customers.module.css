@@ -1,0 +1,10 @@
+.customersContainer {
+  padding: 2rem;
+}
+.formWithMargin {
+  margin-bottom: 2rem;
+}
+.inputWithMargin {
+  margin-left: 1rem;
+  margin-right: 2rem;
+}
