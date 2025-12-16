@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///C:/projects/New%20folder/my-private-shopify/pages/index.module.css"],"sourcesContent":[".container {\r\n  padding: 40px;\r\n  font-family: sans-serif;\r\n}\r\n\r\n.quickAccess {\r\n  margin-top: 32px;\r\n}\r\n\r\n.quickList {\r\n  font-size: 18px;\r\n  line-height: 2;\r\n}\r\n"],"names":[],"mappings":"AAAA;;;;;AAKA;;;;AAIA"}}]
-}
